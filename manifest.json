@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "Lobsters Vim Mode",
+  "description": "Manipulate stories in lobste.rs without leaving the keyboard.",
+  "version": "0.1.0",
+  "homepage_url": "https://github.com/scorphus/lobsters-vim-mode",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://lobste.rs/",
+        "https://lobste.rs/page/*",
+        "https://lobste.rs/newest/*",
+        "https://lobste.rs/recent/*",
+        "https://lobste.rs/saved/*",
+        "https://lobste.rs/t/*"
+      ],
+      "js": ["lobsters-vim-mode.js"],
+      "css": ["lobsters-vim-mode.css"]
+    }
+  ]
+}
