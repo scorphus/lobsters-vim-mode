@@ -12,16 +12,14 @@ document.addEventListener("keydown", keydown);
 function keydown(e) {
   switch (e.code) {
     case "KeyJ": // select next story, if any; otherwise select the first one
-      targetNext();
-      break;
     case "KeyK": // select previous story, if any; otherwise select the last one
-      targetPrev();
+      moveTarget(e.code);
       break;
     case "KeyH": // hide selected story and select the next one, if any
       targetAction(function (story) {
         story.querySelector(".hider").click();
       });
-      targetNext();
+      moveTarget();
       break;
     case "KeyO": // open the selected story, if any
       targetAction(function (story) {
@@ -40,38 +38,24 @@ function keydown(e) {
   }
 }
 
-function targetNext() {
-  var targetIndex = Array.prototype.findIndex.call(stories, function (story) {
+function moveTarget(code) {
+  var fromIndex = Array.prototype.findIndex.call(stories, function (story) {
     return story.classList.contains("target");
   });
-  if (targetIndex < 0) {
-    stories[0].classList.add("target");
-    scrollIntoView(stories[0]);
+  var [toIndex, start, finish] = [fromIndex + 1, 0, stories.length - 1];
+  if (code == "KeyK") {
+    [toIndex, start, finish] = [fromIndex - 1, stories.length - 1, 0];
+  }
+  if (fromIndex < 0) {
+    stories[start].classList.add("target");
+    return scrollIntoView(stories[start]);
+  }
+  if (fromIndex == finish) {
     return;
   }
-  if (targetIndex == stories.length - 1) {
-    return;
-  }
-  stories[targetIndex].classList.remove("target");
-  stories[targetIndex + 1].classList.add("target");
-  scrollIntoView(stories[targetIndex + 1]);
-}
-
-function targetPrev() {
-  var targetIndex = Array.prototype.findIndex.call(stories, function (story) {
-    return story.classList.contains("target");
-  });
-  if (targetIndex < 0) {
-    stories[stories.length - 1].classList.add("target");
-    scrollIntoView(stories[stories.length - 1]);
-    return;
-  }
-  if (targetIndex == 0) {
-    return;
-  }
-  stories[targetIndex].classList.remove("target");
-  stories[targetIndex - 1].classList.add("target");
-  scrollIntoView(stories[targetIndex - 1]);
+  stories[fromIndex].classList.remove("target");
+  stories[toIndex].classList.add("target");
+  scrollIntoView(stories[toIndex]);
 }
 
 function scrollIntoView(el) {
