@@ -26,8 +26,8 @@ function keydown(e) {
         story.querySelector(".u-url").click();
       });
       break;
-    case "KeyN": // got to next page
-    case "KeyB": // got to previous page
+    case "KeyN": // go to next page
+    case "KeyB": // go to previous page
       pageNav(e.code);
       break;
     case "KeyR": // reload page
@@ -38,13 +38,14 @@ function keydown(e) {
   }
 }
 
+// select next or previous story, according to `code` — [KeyJ, KeyK]
 function moveTarget(code) {
   var fromIndex = Array.prototype.findIndex.call(stories, function (story) {
     return story.classList.contains("target");
   });
-  var [toIndex, start, finish] = [fromIndex + 1, 0, stories.length - 1];
+  var [toIndex, start, finish] = [fromIndex + 1, 0, stories.length - 1]; // next
   if (code == "KeyK") {
-    [toIndex, start, finish] = [fromIndex - 1, stories.length - 1, 0];
+    [toIndex, start, finish] = [fromIndex - 1, stories.length - 1, 0]; // prev
   }
   if (fromIndex < 0) {
     stories[start].classList.add("target");
@@ -84,6 +85,7 @@ function scrollDirection(el) {
   return 0;
 }
 
+// if there's a selected story, run `callback` passing such story element to it
 function targetAction(callback) {
   Array.prototype.find.call(stories, function (story) {
     if (story.classList.contains("target")) {
@@ -94,6 +96,7 @@ function targetAction(callback) {
   });
 }
 
+// go to next or previous page, according to `code` — [KeyN, KeyB]
 function pageNav(code) {
   var morelink = document.querySelector(".morelink");
   var next = morelink.children[morelink.childElementCount - 1];
