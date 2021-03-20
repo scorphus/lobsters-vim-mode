@@ -38,6 +38,11 @@ function keydown(e) {
         story.querySelector(".saver").click();
       });
       break;
+    case "KeyM": // open story comments page
+      targetAction(function (story) {
+        story.querySelector(".comments_label a").click();
+      });
+      break;
     default:
       break;
   }
