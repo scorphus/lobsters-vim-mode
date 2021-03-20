@@ -48,6 +48,11 @@ function keydown(e) {
         story.querySelector(".u-url").focus();
       });
       break;
+    case "KeyU": // upvote story
+      targetAction(function (story) {
+        story.querySelector(".upvoter").click();
+      });
+      break;
     default:
       break;
   }
