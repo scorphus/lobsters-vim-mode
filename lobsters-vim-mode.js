@@ -33,6 +33,11 @@ function keydown(e) {
     case "KeyR": // reload page
       window.location.reload();
       break;
+    case "KeyS": // save (or unsave) story
+      targetAction(function (story) {
+        story.querySelector(".saver").click();
+      });
+      break;
     default:
       break;
   }
