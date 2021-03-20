@@ -43,6 +43,11 @@ function keydown(e) {
         story.querySelector(".comments_label a").click();
       });
       break;
+    case "KeyF": // focus story title
+      targetAction(function (story) {
+        story.querySelector(".u-url").focus();
+      });
+      break;
     default:
       break;
   }
